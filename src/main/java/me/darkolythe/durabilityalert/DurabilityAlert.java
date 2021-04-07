@@ -1,6 +1,5 @@
 package me.darkolythe.durabilityalert;
 
-import org.bstats.bukkit.Metrics;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -42,24 +41,6 @@ public final class DurabilityAlert extends JavaPlugin {
 
         // register commands
         this.getCommand("durabilityalert").setExecutor(new CommandHandler());
-
-        // register auto-complete
-        this.getCommand("durabilityalert").setTabCompleter(new PluginTabCompleter("durabilityalert"));
-
-        //set tab completion list
-        ((PluginTabCompleter)this.getCommand("durabilityalert").getTabCompleter()).setTabCompletions(
-            new PluginTabCompleter.TablistGroup[] {
-                new PluginTabCompleter.TablistGroup(new ArrayList<String>(Arrays.asList("toggle")), "durabilityalert.command"),
-                new PluginTabCompleter.TablistGroup(new ArrayList<String>(Arrays.asList("armour", "<number>")), "durabilityalert.command"),
-                new PluginTabCompleter.TablistGroup(new ArrayList<String>(Arrays.asList("tools", "<number>")), "durabilityalert.command"),
-                new PluginTabCompleter.TablistGroup(new ArrayList<String>(Arrays.asList("type", "percent")), "durabilityalert.command"),
-                new PluginTabCompleter.TablistGroup(new ArrayList<String>(Arrays.asList("type", "durability")), "durabilityalert.command"),
-                new PluginTabCompleter.TablistGroup(new ArrayList<String>(Arrays.asList("enchant")), "durabilityalert.command"),
-                new PluginTabCompleter.TablistGroup(new ArrayList<String>(Arrays.asList("status")), "durabilityalert.command")
-            }
-        );
-
-        Metrics metrics = new Metrics(plugin);
 
         joinlistener.onServerStart();
 

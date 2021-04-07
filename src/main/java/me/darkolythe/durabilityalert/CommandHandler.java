@@ -39,6 +39,10 @@ public class CommandHandler implements CommandExecutor {
                                 player.sendMessage(main.prefix + ChatColor.GREEN + main.confighandler.enchantedtrue);
                             }
                             main.joinlistener.playerSave(player);
+                        } else if (args[0].equalsIgnoreCase("tools")) {
+                            player.sendMessage(main.prefix + ChatColor.RED + main.confighandler.invalidarguments + ": /durabilityalert tools <amount>");
+                        } else if (args[0].equalsIgnoreCase("armour")) {
+                            player.sendMessage(main.prefix + ChatColor.RED + main.confighandler.invalidarguments + ": /durabilityalert armour <amount>");
                         } else {
                             player.sendMessage(main.prefix + ChatColor.RED + main.confighandler.invalidarguments + ": /durabilityalert [toggle/armour/tools/type/status/enchant]");
                         }
