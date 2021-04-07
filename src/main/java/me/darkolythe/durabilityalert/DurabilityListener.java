@@ -32,7 +32,7 @@ public class DurabilityListener implements Listener {
             if (type.contains("helmet") || type.contains("chestplate") || type.contains("leggings") || type.contains("boots") || type.contains("elytra")) {
                 percent = data.get(1);
                 isDamaged = true;
-            } else if (type.contains("pickaxe") || type.contains("axe") || type.contains("shovel") || type.contains("sword") || type.contains("hoe") || type.contains("fishing") || type.contains("shears") || type.contains("shield")) {
+            } else if (type.contains("pickaxe") || type.contains("axe") || type.contains("shovel") || type.contains("sword") || type.contains("hoe") || type.contains("fishing") || type.contains("shears") || type.contains("shield") || type.contains("spade")) {
                 percent = data.get(2);
                 isDamaged = true;
             }
@@ -40,18 +40,15 @@ public class DurabilityListener implements Listener {
             if (item.getEnchantments().size() == 0 && data.get(4) == 1) {
                 return;
             }
-            System.out.println(isDamaged);
-            System.out.println(type);
-            System.out.println(data.get(0));
+
             if (isDamaged && data.get(0) == 1) {
                 float toolPercent = (((float) (item.getType().getMaxDurability() - item.getDurability()) / ((float) (item.getType().getMaxDurability())) * 100));
                 int toolLeft = (item.getType().getMaxDurability() - item.getDurability());
-                System.out.println(item.getDurability());
                 if ((data.get(3) == 0 && (toolPercent) <= percent) || (data.get(3) == 1 && (toolLeft <= percent))) {
                     if (!type.contains("shears") && !type.contains("shield") && !type.contains("elytra")) {
-                        sendWarning(player, WordUtils.capitalize(item.getType().toString().split("_")[1]), item.getType().getMaxDurability() - item.getDurability() - 1);
+                        sendWarning(player, WordUtils.capitalize(item.getType().toString().split("_")[1]), item.getType().getMaxDurability() - item.getDurability());
                     } else {
-                        sendWarning(player, WordUtils.capitalize(item.getType().toString()), item.getType().getMaxDurability() - item.getDurability() - 1);
+                        sendWarning(player, WordUtils.capitalize(item.getType().toString()), item.getType().getMaxDurability() - item.getDurability());
                     }
                 }
             }
@@ -60,14 +57,14 @@ public class DurabilityListener implements Listener {
 
     private void sendWarning(Player player, String item, int durability) {
         String subtitle = "";
-        if (durability <= 10) { //if the item durability is less than ten, warn the player with remaining durability
+        player.sendMessage(ChatColor.RED + main.confighandler.lowdurability.replaceAll("%item%", WordUtils.capitalize(item.toLowerCase())));
+        if (durability < 10) { //if the item durability is less than ten, warn the player with remaining durability
             subtitle = ChatColor.GRAY.toString() + ChatColor.BOLD.toString()
-                    + main.confighandler.durabilityleft.replaceAll("%durability%", ChatColor.RED.toString() + ChatColor.BOLD.toString() + durability);
+                    + main.confighandler.durabilityleft.replaceAll("%durability%", Integer.toString(durability));
+            player.sendMessage(subtitle);
             player.playSound(player.getLocation(), Sound.NOTE_SNARE_DRUM, 1, 1);
         } else {
             player.playSound(player.getLocation(), Sound.NOTE_BASS, 1, 1);
         }
-
-        player.sendTitle(ChatColor.RED + main.confighandler.lowdurability.replaceAll("%item%", WordUtils.capitalize(item.toLowerCase())), subtitle);
     }
 }
