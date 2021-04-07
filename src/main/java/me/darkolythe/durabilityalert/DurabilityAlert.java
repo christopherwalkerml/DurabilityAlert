@@ -44,7 +44,6 @@ public final class DurabilityAlert extends JavaPlugin {
 
         joinlistener.onServerStart();
 
-        displaytime = getConfig().getInt("displaytime");
         defaultvalue = getConfig().getInt("defaultvalue");
         defaulttype = getConfig().getString("defaulttype");
         defaultenchanted = getConfig().getBoolean("defaultenchanted");
