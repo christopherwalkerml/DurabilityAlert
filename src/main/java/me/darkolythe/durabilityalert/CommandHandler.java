@@ -26,7 +26,7 @@ public class CommandHandler implements CommandExecutor {
                             } else {
                                 player.sendMessage(main.prefix + ChatColor.GREEN + main.confighandler.warningsenabled);
                             }
-                            main.joinlistener.playerSave(player);
+                            PlayerSaveManager.save(player);
                         } else if (args[0].equalsIgnoreCase("status")) {
                             Utility.printStatus(player, main);
                         } else if (args[0].equalsIgnoreCase("type")) {
@@ -38,7 +38,7 @@ public class CommandHandler implements CommandExecutor {
                             } else {
                                 player.sendMessage(main.prefix + ChatColor.GREEN + main.confighandler.enchantedtrue);
                             }
-                            main.joinlistener.playerSave(player);
+                            PlayerSaveManager.save(player);
                         } else {
                             player.sendMessage(main.prefix + ChatColor.RED + main.confighandler.invalidarguments + ": /durabilityalert [toggle/armour/tools/type/status/enchant]");
                         }
@@ -47,7 +47,7 @@ public class CommandHandler implements CommandExecutor {
                             if (args[1].equalsIgnoreCase("durability") || args[1].equalsIgnoreCase("percent")) {
                                 main.setPlayerType(player, (args[1].equalsIgnoreCase("durability") ? 1 : 0));
                                 player.sendMessage(main.prefix + ChatColor.GREEN + main.confighandler.settype.replaceAll("%type%", args[1]));
-                                main.joinlistener.playerSave(player);
+                                PlayerSaveManager.save(player);
                             } else {
                                 player.sendMessage(main.prefix + ChatColor.RED + main.confighandler.invalidarguments + ": /durabilityalert type [percent/durability]");
                             }
@@ -58,11 +58,11 @@ public class CommandHandler implements CommandExecutor {
                             if (args[0].equalsIgnoreCase("armour") || args[0].equalsIgnoreCase("armor") || args[0].equalsIgnoreCase("a")) {
                                 main.setPlayerArmour(player, percent);
                                 player.sendMessage(main.prefix + ChatColor.GREEN + main.confighandler.armourset.replaceAll("%armour%", Integer.toString(percent)));
-                                main.joinlistener.playerSave(player);
+                                PlayerSaveManager.save(player);
                             } else if (args[0].equalsIgnoreCase("tools") || args[0].equalsIgnoreCase("tool") || args[0].equalsIgnoreCase("t")) {
                                 main.setPlayerTools(player, percent);
                                 player.sendMessage(main.prefix + ChatColor.GREEN + main.confighandler.toolset.replaceAll("%tool%", Integer.toString(percent)));
-                                main.joinlistener.playerSave(player);
+                                PlayerSaveManager.save(player);
                             } else {
                                 player.sendMessage(main.prefix + ChatColor.RED + main.confighandler.invalidarguments + ": /durabilityalert [armour/tools]");
                             }
