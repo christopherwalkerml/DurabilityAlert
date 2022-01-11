@@ -1,2 +1,5 @@
 .idea/
+/server/
 DurabilityAlert.iml
+dependency-reduced-pom.xml
+/target/

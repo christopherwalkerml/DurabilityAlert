@@ -1,6 +1,7 @@
 package me.darkolythe.durabilityalert;
 
 import org.bstats.bukkit.Metrics;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -30,10 +31,9 @@ public final class DurabilityAlert extends JavaPlugin {
 
         saveDefaultConfig();
 
-        joinlistener = new JoinListener(plugin);
+        joinlistener = new JoinListener();
         durabilitylistener = new DurabilityListener(plugin);
         confighandler = new ConfigHandler(plugin);
-        joinlistener.setup();
 
         // register events
         getServer().getPluginManager().registerEvents(durabilitylistener, plugin);
@@ -61,7 +61,11 @@ public final class DurabilityAlert extends JavaPlugin {
 
         Metrics metrics = new Metrics(plugin);
 
-        joinlistener.onServerStart();
+        PlayerSaveManager.convertOldFile();
+
+        for (Player p : Bukkit.getServer().getOnlinePlayers()) {
+            PlayerSaveManager.load(p);
+        }
 
         displaytime = getConfig().getInt("displaytime");
         defaultvalue = getConfig().getInt("defaultvalue");
@@ -72,11 +76,6 @@ public final class DurabilityAlert extends JavaPlugin {
         prefix = ChatColor.translateAlternateColorCodes('&', getConfig().getString("prefix"));
 
         System.out.println(prefix + ChatColor.GREEN + "DurabilityAlert enabled!");
-    }
-
-    @Override
-    public void onDisable() {
-        joinlistener.onServerStop();
     }
 
     public static DurabilityAlert getInstance() {
